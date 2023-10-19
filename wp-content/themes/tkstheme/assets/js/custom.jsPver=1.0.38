@@ -1,0 +1,229 @@
+jQuery(function($){
+    $('#fullpage').fullpage({
+        scrollOverflow:true,
+    });
+    $('.burgermenu__trigger').on('click',function(){
+        $('.burgermenu').toggleClass('open');
+    });
+    $('.burgermenu__link a[href]').on('click', function(event) {
+      $('.burgermenu__trigger').trigger('click');
+  });
+  $('.burgermenu__back').on('click', function(event) {
+    $('.burgermenu__trigger').trigger('click');
+});
+
+$(function() {
+  $('.burgermenu__content a.link-item').each(function(){
+      var $href = $(this).attr('href');
+      if(location.href.match($href)) {
+          $(this).addClass('current');
+      } else {
+          $(this).removeClass('current');
+      }
+  });
+
+  $('.header-nav a').each(function(){
+    var $href = $(this).attr('href');
+    if(location.href.match($href)) {
+        $(this).addClass('current');
+    } else {
+        $(this).removeClass('current');
+    }
+});
+
+$('.footer-nav a').each(function(){
+  var $href = $(this).attr('href');
+  if(location.href.match($href)) {
+      $(this).addClass('current');
+  } else {
+      $(this).removeClass('current');
+  }
+});
+
+});
+
+    $(document).ready(function(){
+        if (window.matchMedia( "(max-width: 767px)" ).matches){
+          if($('.top-about__content').length){
+        var aboutSize = $('.top-about__content').height();
+  $('.about-shape img').height(aboutSize+270);
+}
+}else if(window.matchMedia( "(max-width: 1000px)" ).matches){
+  if($('.top-about__content').length){
+    var aboutSize = $('.top-about__content').height();
+$('.about-shape img').height(aboutSize+400);
+}
+}
+else{
+  if($('.top-about__content').length){
+    var aboutSize = $('.top-about__content').height();
+$('.about-shape img').height(aboutSize+510);
+}
+}
+
+window.addEventListener('resize', function () {
+  if (window.matchMedia( "(max-width: 767px)" ).matches){
+    if($('.top-about__content').length){
+  var aboutSize = $('.top-about__content').height();
+$('.about-shape img').height(aboutSize+270);
+}
+}else if(window.matchMedia( "(max-width: 1000px)" ).matches){
+if($('.top-about__content').length){
+var aboutSize = $('.top-about__content').height();
+$('.about-shape img').height(aboutSize+400);
+}
+}
+else{
+if($('.top-about__content').length){
+var aboutSize = $('.top-about__content').height();
+$('.about-shape img').height(aboutSize+510);
+}
+}
+});
+        
+    });
+    const keyName = 'visited';
+const keyValue = true;
+if($('.fv').length){
+if (!sessionStorage.getItem(keyName)) {
+    //sessionStorageにキーと値を追加
+    sessionStorage.setItem(keyName, keyValue);
+
+    //ここに初回アクセス時の処理
+    $(window).on('load',function(){
+        $('.video-content').fadeIn(1600);
+        setTimeout(function(){
+          $('.top-video').fadeOut(1000);
+        },4400);
+        setTimeout(function(){
+            $('.fv-content').fadeIn(1000);
+          },4400);
+          setTimeout(function(){
+            $('.main-content').fadeIn(1000);
+          },4400);
+        setTimeout(function(){
+        $('header').fadeIn(1000);
+        },4400);
+        setTimeout(function(){
+            $('.cta-fixed').fadeIn(1000);
+            },4400);
+        setTimeout(function(){
+          $('.fv-content').addClass('show');
+          },4600);        
+      });
+
+
+} else {
+    //ここに通常アクセス時の処理
+    $(window).on('load',function(){
+        $('.top-video').addClass('hidden');
+        $('header').fadeIn(1000);
+        $('.fv-content').fadeIn(1000);
+        $('.main-content').fadeIn(1000);
+        $('.cta-fixed').fadeIn(1000);
+          $('.fv-content').addClass('show');
+        });
+}
+}else{
+  $(document).ready(function(){
+    $('.page-fadein').fadeIn(800);
+    $('header').fadeIn(800);
+  });
+
+  $(window).scroll(function() {
+  let scrollPosition = $(this).scrollTop();
+  let windowsize = $(window).width();
+  let headerheight = windowsize*0.073;
+  console.log(scrollPosition);
+  if (scrollPosition > headerheight + 40) {
+      $('header').addClass('show');
+  }else{
+      $('header').removeClass('show'); 
+  }
+});
+
+}
+});
+
+var userAgent = window.navigator.userAgent.toLowerCase();
+if(userAgent.indexOf('msie') != -1 ||
+        userAgent.indexOf('trident') != -1) {
+    console.log('Internet Explorerをお使いですね');
+} else if(userAgent.indexOf('edge') != -1) {
+    console.log('Edgeをお使いですね');
+} else if(userAgent.indexOf('chrome') != -1) {
+    console.log('Google Chromeをお使いですね');
+} else if(userAgent.indexOf('safari') != -1) {
+  var hSize = $(window).height();
+  $('.main-content').css('margin-top',-hSize);
+  $('.fv').height(hSize);
+  $('.fv-content').height(hSize);
+}
+if($('.scroll_fade').length){
+const boxes = document.querySelectorAll(".scroll_fade");
+
+const options = {
+  root: null, // 今回はビューポートをルート要素とする
+  rootMargin: "-20% 0px", // ビューポートの中心を判定基準にする
+  threshold: 0 // 閾値は0
+};
+const observer = new IntersectionObserver(doWhenIntersect, options);
+// それぞれのboxを監視する
+boxes.forEach(box => {
+  observer.observe(box);
+});
+
+/**
+ * 交差したときに呼び出す関数
+ * @param entries
+ */
+function doWhenIntersect(entries) {
+  // 交差検知をしたもののなかで、isIntersectingがtrueのDOMを色を変える関数に渡す
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      activateIndex(entry.target);
+    }
+  });
+}
+
+/**
+ * 目次の色を変える関数
+ * @param element
+ */
+function activateIndex(element) {
+  // すでにアクティブになっている目次を選択
+  element.classList.add("show");
+}
+
+
+/*footerを消す*/
+const number = document.querySelectorAll("footer");
+
+const options2 = {
+  root: null, // 今回はビューポートをルート要素とする
+  rootMargin: "-20% 0px", // ビューポートの中心を判定基準にする
+  threshold: 0 // 閾値は0
+};
+const observer2 = new IntersectionObserver(doWhenIntersect2, options2);
+// それぞれのboxを監視する
+number.forEach(box => {
+  observer2.observe(box);
+});
+
+/**
+ * 交差したときに呼び出す関数
+ * @param entries2
+ */
+function doWhenIntersect2(entries2) {
+  // 交差検知をしたもののなかで、isIntersectingがtrueのDOMを色を変える関数に渡す
+  entries2.forEach(entry => {
+    if (entry.isIntersecting) {
+      const Footer=document.querySelectorAll('.cta-fixed');
+      Footer[0].classList.add("hidden");
+    }else{
+      const Footer=document.querySelectorAll('.cta-fixed');
+      Footer[0].classList.remove("hidden");
+    }
+  });
+}
+}
